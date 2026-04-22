@@ -643,9 +643,9 @@ function registrar() {
   if (!nombre || !whatsapp || !plataforma) { alert('Por favor completá todos los campos obligatorios.'); return; }
   var codigo = nombre.toLowerCase().replace(/\s+/g,'').substring(0,6) + Math.random().toString(36).substring(2,6).toUpperCase();
   var link   = 'flotared.com/r/' + codigo;
-  var SCRIPT_URL = 'PEGAR_URL_DEL_SCRIPT_FLOTARED_ACA';
+  var SCRIPT_URL = 'sFttps://script.google.com/macros/s/AKfycbyyZ0xMf6fcBnAh6qHpihepwrtqtWsggotGJmgXKr_6uKkQJwrlDJ8O0WFh_xnXN7x8/exec';
   var ref = document.getElementById('referido').value.trim();
-  if (SCRIPT_URL !== 'PEGAR_URL_DEL_SCRIPT_FLOTARED_ACA') {
+  if (SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyyZ0xMf6fcBnAh6qHpihepwrtqtWsggotGJmgXKr_6uKkQJwrlDJ8O0WFh_xnXN7x8/exec') {
     fetch(SCRIPT_URL, { method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({action:'registrar_afiliado',nombre,whatsapp,plataforma,referido:ref,codigo})
     }).catch(e=>console.log(e));
