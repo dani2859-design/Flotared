@@ -1,1 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlotaRed — Ahorrá en GNC y ganá referiendo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --negro:   #04060A;
+  --gris-d:  #0D1117;
+  --azul:    #1D4ED8;
+  --azul-l:  #3B82F6;  +
+  --gold-l:  #FCD34D;
+  --verde:   #10B981;
+  --verde-l: #ECFDF5;
+  --white:   #FFFFFF;
+  --texto:   #1E293B;
+  --muted:   #64748B;
+  --gris-c:  #F8FAFC;
+  --borde:   #E2E8F0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--white);color:var(--texto);overflow-x:hidden;}
 
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(4,6,10,0.95);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:14px 32px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:#fff;}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-link{color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;transition:color .2s;}
+.nav-link:hover{color:#fff;}
+.nav-cta{background:var(--gold);color:var(--negro);font-weight:700;font-size:14px;
+  padding:10px 24px;border-radius:100px;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold-l);}
+
+/* ── HERO (OSCURO) ── */
+.hero{min-height:100vh;background:var(--negro);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:120px 0 80px;}
+.hero-bg-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(245,158,11,0.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(245,158,11,0.04) 1px,transparent 1px);
+  background-size:80px 80px;}
+.hero-glow{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;}
+.hg1{width:600px;height:600px;background:rgba(29,78,216,0.3);top:-200px;right:-100px;}
+.hg2{width:500px;height:500px;background:rgba(245,158,11,0.15);bottom:-100px;left:-100px;}
+.hero-wrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:0 24px;}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.08);
+  color:var(--gold);font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:.15em;text-transform:uppercase;padding:6px 16px;border-radius:100px;
+  margin-bottom:28px;animation:fadeUp .6s both;}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,10vw,120px);
+  line-height:.88;color:#fff;margin-bottom:24px;animation:fadeUp .7s .1s both;}
+.hero-title .gold{color:var(--gold);}
+.hero-title .azul{color:var(--azul-l);}
+
+.hero-sub{font-size:clamp(16px,2.5vw,20px);color:rgba(255,255,255,0.6);
+  max-width:580px;line-height:1.7;margin-bottom:40px;animation:fadeUp .7s .2s both;}
+.hero-sub strong{color:#fff;}
+
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .7s .3s both;}
+.btn-gold{background:var(--gold);color:var(--negro);font-weight:700;font-size:16px;
+  padding:16px 32px;border-radius:100px;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-gold:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 32px rgba(245,158,11,.4);}
+.btn-ghost{border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;
+  padding:16px 32px;border-radius:100px;text-decoration:none;transition:all .2s;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:64px;animation:fadeUp .7s .4s both;}
+.stat{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+  border-radius:20px;padding:24px;transition:border-color .2s;}
+.stat:hover{border-color:rgba(245,158,11,.4);}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,52px);color:var(--gold);line-height:1;}
+.stat-lbl{font-size:13px;color:rgba(255,255,255,.5);margin-top:6px;line-height:1.4;}
+
+/* ── SECCIONES CLARAS ── */
+.section-light{padding:100px 0;background:var(--white);}
+.section-gray{padding:100px 0;background:var(--gris-c);}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+
+.sec-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--azul);margin-bottom:12px;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,6vw,72px);
+  line-height:.9;color:var(--texto);margin-bottom:32px;}
+.sec-title .gold{color:var(--gold);}
+.sec-title .azul{color:var(--azul);}
+.sec-title .verde{color:var(--verde);}
+
+/* ── CÓMO FUNCIONA ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.step{background:var(--white);border:1px solid var(--borde);border-radius:20px;
+  padding:32px;transition:all .3s;position:relative;overflow:hidden;}
+.step::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+.step-1::before{background:var(--gold);}
+.step-2::before{background:var(--azul);}
+.step-3::before{background:var(--verde);}
+.step:hover{border-color:var(--azul-l);box-shadow:0 8px 32px rgba(59,130,246,.1);transform:translateY(-4px);}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:64px;
+  color:rgba(0,0,0,.05);position:absolute;top:12px;right:16px;line-height:1;}
+.step-icon{font-size:36px;margin-bottom:16px;}
+.step-title{font-size:18px;font-weight:700;margin-bottom:10px;color:var(--texto);}
+.step-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* ── CALCULADORA ── */
+.calc-wrap{background:linear-gradient(135deg,#FFF9EB,#FFFDF7);border:1px solid rgba(245,158,11,.2);
+  border-radius:28px;padding:48px;}
+.calc-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,4vw,44px);
+  color:var(--gold);margin-bottom:28px;}
+.calc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
+.calc-item{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);
+  border-radius:14px;padding:18px;}
+.calc-lbl{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+.calc-val{font-family:'DM Mono',monospace;font-size:clamp(16px,2.5vw,24px);color:var(--texto);font-weight:500;}
+.calc-val .gold{color:var(--gold);}
+
+.desc-table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;
+  border:1px solid var(--borde);}
+.desc-table th{background:var(--azul);color:#fff;padding:12px 16px;text-align:left;
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+.desc-table td{padding:14px 16px;border-bottom:1px solid var(--borde);font-size:14px;color:var(--texto);}
+.desc-table tr:last-child td{border-bottom:none;}
+.desc-table tr:hover td{background:var(--azul-ll);}
+.desc-table tr.highlight td{background:#FFF9EB;font-weight:600;}
+.td-gold{color:var(--gold);font-weight:700;font-family:'DM Mono',monospace;}
+.td-verde{color:var(--verde);font-weight:700;font-family:'DM Mono',monospace;}
+
+/* ── AFILIADOS ── */
+.afil-intro{font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:48px;}
+
+.niveles{display:flex;flex-direction:column;gap:14px;margin-bottom:48px;}
+.nivel{display:grid;grid-template-columns:72px 1fr auto;align-items:center;gap:20px;
+  border-radius:18px;padding:24px 28px;transition:transform .2s;border:1px solid var(--borde);}
+.nivel:hover{transform:translateX(6px);}
+.n1{background:linear-gradient(135deg,#FFF9EB,#FFFDF7);border-color:rgba(245,158,11,.3);}
+.n2{background:linear-gradient(135deg,#EFF6FF,#F8FBFF);border-color:rgba(59,130,246,.25);}
+.n3{background:linear-gradient(135deg,#ECFDF5,#F8FFFC);border-color:rgba(16,185,129,.2);}
+.n-estacion{background:linear-gradient(135deg,#FEF2F2,#FFFAFA);border:2px solid rgba(239,68,68,.3);}
+
+.nivel-badge{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;
+  justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;}
+.n1 .nivel-badge{background:rgba(245,158,11,.15);color:var(--gold);}
+.n2 .nivel-badge{background:rgba(59,130,246,.12);color:var(--azul);}
+.n3 .nivel-badge{background:rgba(16,185,129,.12);color:var(--verde);}
+.n-estacion .nivel-badge{background:rgba(239,68,68,.1);color:#EF4444;font-size:28px;}
+
+.nivel-title{font-size:17px;font-weight:700;color:var(--texto);margin-bottom:3px;}
+.nivel-desc{font-size:13px;color:var(--muted);}
+
+.nivel-ingreso{text-align:right;}
+.nivel-pct{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;}
+.n1 .nivel-pct{color:var(--gold);}
+.n2 .nivel-pct{color:var(--azul);}
+.n3 .nivel-pct{color:var(--verde);}
+.n-estacion .nivel-pct{color:#EF4444;}
+.nivel-pct-lbl{font-size:11px;color:var(--muted);}
+.nivel-monto{font-family:'DM Mono',monospace;font-size:13px;margin-top:2px;font-weight:600;}
+.n1 .nivel-monto{color:var(--gold);}
+.n2 .nivel-monto{color:var(--azul);}
+.n3 .nivel-monto{color:var(--verde);}
+.n-estacion .nivel-monto{color:#EF4444;}
+
+/* Proyección */
+.proyeccion{border:1px solid var(--borde);border-radius:18px;overflow:hidden;}
+.proy-header{background:var(--azul);color:#fff;padding:14px 20px;
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+.proy-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:14px 20px;
+  border-bottom:1px solid var(--borde);transition:background .2s;font-size:14px;}
+.proy-row:last-child{border-bottom:none;}
+.proy-row:hover{background:var(--azul-ll);}
+.proy-highlight{background:#FFF9EB !important;font-weight:700;border-top:2px solid var(--gold);}
+
+/* Estaciones */
+.estacion-box{background:linear-gradient(135deg,#FEF2F2,#FFFAFA);
+  border:2px solid rgba(239,68,68,.25);border-radius:24px;padding:40px;margin-top:32px;}
+.estacion-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,4vw,44px);
+  color:#DC2626;margin-bottom:14px;}
+.estacion-desc{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.estacion-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.est-num{background:#fff;border:1px solid rgba(239,68,68,.15);border-radius:14px;padding:20px;text-align:center;}
+.est-val{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,3vw,36px);color:#DC2626;line-height:1;}
+.est-lbl{font-size:12px;color:var(--muted);margin-top:6px;}
+
+/* ── FORMULARIO ── */
+.form-section{background:var(--negro);padding:100px 0;}
+.form-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:28px;padding:48px;max-width:600px;margin:0 auto;}
+.form-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,56px);
+  text-align:center;color:#fff;margin-bottom:8px;}
+.form-sub{text-align:center;color:rgba(255,255,255,.5);font-size:15px;margin-bottom:36px;}
+.form-group{margin-bottom:18px;}
+.form-label{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:8px;display:block;}
+.form-input,.form-select{width:100%;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 18px;
+  color:#fff;font-size:15px;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s;}
+.form-input:focus,.form-select:focus{border-color:var(--gold);}
+.form-input::placeholder{color:rgba(255,255,255,.3);}
+.form-select option{background:#1a1a2e;color:#fff;}
+.form-btn{width:100%;background:var(--gold);color:var(--negro);font-weight:700;
+  font-size:16px;padding:18px;border-radius:100px;border:none;cursor:pointer;
+  font-family:'Outfit',sans-serif;transition:all .2s;margin-top:8px;}
+.form-btn:hover{background:var(--gold-l);transform:translateY(-2px);}
+.form-success{display:none;text-align:center;padding:24px;}
+.form-success-icon{font-size:56px;margin-bottom:14px;}
+.form-success-title{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--verde);margin-bottom:8px;}
+.form-success-desc{color:rgba(255,255,255,.6);font-size:15px;line-height:1.6;}
+.ref-link{font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);
+  background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);
+  padding:12px 16px;border-radius:10px;margin-top:16px;word-break:break-all;cursor:pointer;display:block;}
+
+/* ── PLATAFORMAS BADGE ── */
+.plataformas{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+.plat-badge{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:100px;
+  font-size:13px;font-weight:600;}
+.pb-uber{background:#1a1a1a;color:#fff;}
+.pb-didi{background:#FF6B2B;color:#fff;}
+.pb-cabify{background:#9B59B6;color:#fff;}
+.pb-taxi{background:#F5A623;color:#000;}
+.pb-camion{background:#1D4ED8;color:#fff;}
+
+/* ── FOOTER ── */
+footer{background:var(--negro);border-top:1px solid rgba(255,255,255,.06);
+  padding:48px 0;text-align:center;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;margin-bottom:8px;}
+.footer-logo span{color:var(--gold);}
+.footer-sub{font-size:14px;color:rgba(255,255,255,.3);}
+
+/* ── UTILS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  .hero-stats,.steps,.calc-grid,.estacion-nums{grid-template-columns:1fr;}
+  .desc-table th:nth-child(3),.desc-table td:nth-child(3){display:none;}
+  .proy-header,.proy-row{grid-template-columns:1fr 1fr 1fr;}
+  .proy-header div:last-child,.proy-row div:last-child{display:none;}
+  .nivel{grid-template-columns:56px 1fr;gap:12px;}
+  .nivel-ingreso{grid-column:1/-1;padding-left:68px;text-align:left;}
+  nav{padding:12px 16px;}
+  .nav-links{display:none;}
+  .form-wrap{padding:28px 16px;}
+  .calc-wrap{padding:28px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Flota<span>Red</span></div>
+  <div class="nav-links">
+    <a href="#como-funciona" class="nav-link">Cómo funciona</a>
+    <a href="#afiliados" class="nav-link">Ganá referiendo</a>
+    <a href="#estaciones" class="nav-link">Estaciones</a>
+  </div>
+  <a href="#unirse" class="nav-cta">Quiero unirme ⛽</a>
+</nav>
+
+<!-- ══ HERO OSCURO ══ -->
+<section class="hero" id="inicio">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-glow hg1"></div>
+  <div class="hero-glow hg2"></div>
+  <div class="hero-wrap">
+
+    <div class="hero-badge"><span class="hero-dot"></span>Buenos Aires · Lanzamiento 2026</div>
+
+    <h1 class="hero-title">
+      Ahorrá en GNC.<br>
+      <span class="gold">Ganá</span> referiendo.<br>
+      <span class="azul">Juntos.</span>
+    </h1>
+
+    <p class="hero-sub">
+      La red de conductores de <strong>Uber, DiDi, Cabify y Taxistas</strong> más grande de Argentina.
+      Juntos negociamos descuentos que solos no podemos conseguir.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#unirse" class="btn-gold">⛽ Quiero mis descuentos</a>
+      <a href="#afiliados" class="btn-ghost">💰 Ver cómo ganar referiendo</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">250K+</div>
+        <div class="stat-lbl">vehículos potenciales en Buenos Aires</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">$40.320</div>
+        <div class="stat-lbl">ahorro mensual estimado con 10% de descuento</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-lbl">niveles de comisión por referidos activos</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PARA QUIÉN ES ══ -->
+<section class="section-light reveal" id="como-funciona">
+  <div class="wrap">
+    <div class="sec-label">Para todos los que manejan GNC</div>
+    <h2 class="sec-title">Una red para<br><span class="azul">cada conductor.</span></h2>
+
+    <div class="plataformas">
+      <div class="plat-badge pb-uber">🚗 Uber</div>
+      <div class="plat-badge pb-didi">🚗 DiDi</div>
+      <div class="plat-badge pb-cabify">🚗 Cabify</div>
+      <div class="plat-badge pb-taxi">🚕 Taxistas</div>
+      <div class="plat-badge pb-camion">🚛 Logística</div>
+    </div>
+
+    <div class="steps">
+      <div class="step step-1">
+        <div class="step-num">1</div>
+        <div class="step-icon">✍️</div>
+        <div class="step-title">Te registrás gratis</div>
+        <div class="step-desc">Completás el formulario y obtenés tu link de referido único. Sin costo, sin compromiso.</div>
+      </div>
+      <div class="step step-2">
+        <div class="step-num">2</div>
+        <div class="step-icon">🤝</div>
+        <div class="step-title">Crecemos juntos</div>
+        <div class="step-desc">Cuando llegamos a 500 conductores, FlotaRed va a las estaciones a negociar descuentos en nombre de toda la red.</div>
+      </div>
+      <div class="step step-3">
+        <div class="step-num">3</div>
+        <div class="step-icon">💰</div>
+        <div class="step-title">Ahorrás y ganás</div>
+        <div class="step-desc">Cargás con descuento. Y por cada conductor que referís, recibís una comisión mensual automática.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CALCULADORA ══ -->
+<section class="section-gray reveal">
+  <div class="wrap">
+    <div class="sec-label">02 — Los números reales</div>
+    <h2 class="sec-title">Lo que gastás.<br><span class="gold">Lo que ahorrás.</span></h2>
+    <div class="calc-wrap">
+      <div class="calc-title">📊 Conductor típico · Buenos Aires GNC</div>
+      <div class="calc-grid">
+        <div class="calc-item">
+          <div class="calc-lbl">Kilómetros por semana</div>
+          <div class="calc-val"><span class="gold">1.500</span> km</div>
+        </div>
+        <div class="calc-item">
+          <div class="calc-lbl">Cargas semanales</div>
+          <div class="calc-val"><span class="gold">~12</span> cargas</div>
+        </div>
+        <div class="calc-item">
+          <div class="calc-lbl">Gasto mensual GNC</div>
+          <div class="calc-val"><span class="gold">$403.200</span></div>
+        </div>
+      </div>
+      <table class="desc-table">
+        <thead>
+          <tr><th>Descuento</th><th>Ahorro/mes</th><th>En USD</th><th>Al año</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>5%</td><td class="td-gold">$20.160</td><td class="td-verde">~USD 20</td><td class="td-gold">$241.920</td></tr>
+          <tr class="highlight"><td>⭐ 10%</td><td class="td-gold">$40.320</td><td class="td-verde">~USD 39</td><td class="td-gold">$483.840</td></tr>
+          <tr><td>15%</td><td class="td-gold">$60.480</td><td class="td-verde">~USD 59</td><td class="td-gold">$725.760</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AFILIADOS ══ -->
+<section class="section-light reveal" id="afiliados">
+  <div class="wrap">
+    <div class="sec-label">03 — Sistema de comisiones</div>
+    <h2 class="sec-title">Tu red.<br><span class="gold">Tu ingreso.</span></h2>
+    <p class="afil-intro">Cada conductor que referís genera una comisión mensual automática — mientras esa persona siga en la red. Sin límite de referidos. Sin techo de ganancias.</p>
+
+    <div class="niveles">
+      <div class="nivel n1">
+        <div class="nivel-badge">N1</div>
+        <div>
+          <div class="nivel-title">Nivel 1 — Tus referidos directos</div>
+          <div class="nivel-desc">Conductores que se unen con tu link personal</div>
+        </div>
+        <div class="nivel-ingreso">
+          <div class="nivel-pct">30%</div>
+          <div class="nivel-pct-lbl">de la utilidad</div>
+          <div class="nivel-monto">$1.310 / conductor / mes</div>
+        </div>
+      </div>
+      <div class="nivel n2">
+        <div class="nivel-badge">N2</div>
+        <div>
+          <div class="nivel-title">Nivel 2 — Los referidos de tus referidos</div>
+          <div class="nivel-desc">Conductores que trajo alguien que vos referiste</div>
+        </div>
+        <div class="nivel-ingreso">
+          <div class="nivel-pct">15%</div>
+          <div class="nivel-pct-lbl">de la utilidad</div>
+          <div class="nivel-monto">$655 / conductor / mes</div>
+        </div>
+      </div>
+      <div class="nivel n3">
+        <div class="nivel-badge">N3</div>
+        <div>
+          <div class="nivel-title">Nivel 3 — La red de tu red</div>
+          <div class="nivel-desc">El tercer nivel de conductores referidos</div>
+        </div>
+        <div class="nivel-ingreso">
+          <div class="nivel-pct">5%</div>
+          <div class="nivel-pct-lbl">de la utilidad</div>
+          <div class="nivel-monto">$218 / conductor / mes</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;color:var(--texto);">📈 Proyección de ganancias</h3>
+    <div class="proyeccion">
+      <div class="proy-header">
+        <div>Referidos directos</div>
+        <div>Ingreso N1/mes</div>
+        <div>+ Red N2 (3 c/u)</div>
+        <div>Total/mes</div>
+      </div>
+      <div class="proy-row">
+        <div>5 conductores</div>
+        <div class="td-gold">$6.550</div>
+        <div style="color:var(--azul)">$9.825</div>
+        <div class="td-gold">$16.375</div>
+      </div>
+      <div class="proy-row">
+        <div>10 conductores</div>
+        <div class="td-gold">$13.100</div>
+        <div style="color:var(--azul)">$19.650</div>
+        <div class="td-gold">$32.750</div>
+      </div>
+      <div class="proy-row proy-highlight">
+        <div>⭐ 20 conductores</div>
+        <div class="td-gold">$26.200</div>
+        <div style="color:var(--azul)">$39.300</div>
+        <div class="td-gold">$65.500</div>
+      </div>
+      <div class="proy-row">
+        <div>50 conductores</div>
+        <div class="td-gold">$65.500</div>
+        <div style="color:var(--azul)">$98.250</div>
+        <div class="td-gold">$163.750</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ESTACIONES ══ -->
+<section class="section-gray reveal" id="estaciones">
+  <div class="wrap">
+    <div class="sec-label">04 — Para quienes conocen estaciones GNC</div>
+    <h2 class="sec-title">¿Conocés una<br><span style="color:#DC2626">estación GNC?</span></h2>
+    <div class="estacion-box">
+      <div class="estacion-title">⛽ Oportunidad especial</div>
+      <p class="estacion-desc">No hace falta esperar a que FlotaRed llegue a 300 conductores para traer una estación. Si conocés al dueño, trabajás ahí, o tenés algún contacto — podés traerla desde el día 1 y cobrar tu comisión desde las primeras cargas. Recibís el 20% de la utilidad que genera FlotaRed sobre esa estación — por tiempo limitado.</p>
+      <div class="estacion-nums">
+        <div class="est-num">
+          <div class="est-val">50</div>
+          <div class="est-lbl">cargas diarias mínimas (conservador)</div>
+        </div>
+        <div class="est-num">
+          <div class="est-val">$655.500</div>
+          <div class="est-lbl">ingreso mensual estimado para el afiliado</div>
+        </div>
+        <div class="est-num">
+          <div class="est-val">20%</div>
+          <div class="est-lbl">de la utilidad de FlotaRed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ PRIMEROS 30 DÍAS ══ -->
+<section class="section-light reveal" id="como-arrancamos">
+  <div class="wrap">
+    <div class="sec-label">Cómo arrancamos</div>
+    <h2 class="sec-title">30 días para<br><span class="gold">el primer descuento.</span></h2>
+    <p style="font-size:16px;color:var(--muted);max-width:640px;line-height:1.7;margin-bottom:48px;">
+      No esperamos tener todo perfecto para arrancar. Arrancamos con lo que hay — 
+      WhatsApp, datos reales y conductores que ya cargan GNC todos los días.
+    </p>
+
+    <div style="display:flex;flex-direction:column;gap:0;">
+
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;position:relative;">
+        <div style="position:absolute;left:54px;top:48px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),var(--azul));"></div>
+        <div style="padding-top:8px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Semana<br>1</div>
+        <div style="padding:0 0 40px 24px;position:relative;">
+          <div style="position:absolute;left:-6px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(245,158,11,0.2);"></div>
+          <div style="font-size:17px;font-weight:600;color:var(--texto);margin-bottom:10px;">Arranque en paralelo</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--gold);font-size:11px;">→</span>Publicar en grupos de conductores y sumar los primeros 100 al grupo de Telegram</div>
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--gold);font-size:11px;">→</span>Cada conductor registra sus cargas mandando un mensaje al bot de WhatsApp</div>
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--gold);font-size:11px;">→</span>Daniel habla con las primeras estaciones GNC</div>
+          </div>
+          <div style="margin-top:12px;display:inline-flex;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:11px;background:rgba(245,158,11,0.1);color:#92400E;border:1px solid rgba(245,158,11,0.2);padding:3px 10px;border-radius:100px;">100 conductores</span>
+            <span style="font-size:11px;background:rgba(29,78,216,0.08);color:var(--azul);border:1px solid rgba(29,78,216,0.15);padding:3px 10px;border-radius:100px;">Primeros datos de cargas</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;position:relative;">
+        <div style="position:absolute;left:54px;top:48px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--azul),var(--verde));"></div>
+        <div style="padding-top:8px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Semana<br>2</div>
+        <div style="padding:0 0 40px 24px;position:relative;">
+          <div style="position:absolute;left:-6px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--azul);box-shadow:0 0 0 3px rgba(29,78,216,0.15);"></div>
+          <div style="font-size:17px;font-weight:600;color:var(--texto);margin-bottom:10px;">Crecer y negociar con datos reales</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--azul);font-size:11px;">→</span>Objetivo: 300 conductores en la red</div>
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--azul);font-size:11px;">→</span>Con los datos reales de cargas vamos a negociar con las 3 estaciones más frecuentadas</div>
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--azul);font-size:11px;">→</span>"300 conductores ya cargan acá — danos 8% de descuento a cambio de volumen garantizado"</div>
+          </div>
+          <div style="margin-top:12px;display:inline-flex;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:11px;background:rgba(29,78,216,0.08);color:var(--azul);border:1px solid rgba(29,78,216,0.15);padding:3px 10px;border-radius:100px;">300 conductores</span>
+            <span style="font-size:11px;background:rgba(245,158,11,0.1);color:#92400E;border:1px solid rgba(245,158,11,0.2);padding:3px 10px;border-radius:100px;">Negociación con estaciones</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;position:relative;">
+        <div style="position:absolute;left:54px;top:48px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--verde),transparent);"></div>
+        <div style="padding-top:8px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Semana<br>3</div>
+        <div style="padding:0 0 40px 24px;position:relative;">
+          <div style="position:absolute;left:-6px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--verde);box-shadow:0 0 0 3px rgba(16,185,129,0.15);"></div>
+          <div style="font-size:17px;font-weight:600;color:var(--texto);margin-bottom:10px;">Primer acuerdo cerrado</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--verde);font-size:11px;">→</span>Cerrar el primer acuerdo de descuento con al menos 1 estación</div>
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--verde);font-size:11px;">→</span>Comunicar a la comunidad — eso dispara el boca a boca</div>
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--verde);font-size:11px;">→</span>Con ese caso real se negocian más estaciones</div>
+          </div>
+          <div style="margin-top:12px;display:inline-flex;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:11px;background:rgba(16,185,129,0.1);color:#065F46;border:1px solid rgba(16,185,129,0.2);padding:3px 10px;border-radius:100px;">Primera estación aliada</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;">
+        <div style="padding-top:8px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">Semana<br>4</div>
+        <div style="padding:0 0 16px 24px;position:relative;">
+          <div style="position:absolute;left:-6px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,158,11,0.25);"></div>
+          <div style="font-size:17px;font-weight:600;color:var(--texto);margin-bottom:10px;">Primeras cargas con descuento</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--gold);font-size:11px;">→</span>Los conductores cargan con descuento real en la estación aliada</div>
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--gold);font-size:11px;">→</span>FlotaRed cobra su primera comisión</div>
+            <div style="font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:baseline;"><span style="color:var(--gold);font-size:11px;">→</span>Las comisiones de afiliados empiezan a acreditarse</div>
+          </div>
+          <div style="margin-top:16px;background:linear-gradient(135deg,#FFF9EB,#FFFDF7);border:1px solid rgba(245,158,11,0.25);border-radius:14px;padding:16px 20px;">
+            <div style="font-size:13px;font-weight:600;color:#92400E;margin-bottom:4px;">El ciclo se retroalimenta solo</div>
+            <div style="font-size:13px;color:var(--muted);">Más conductores → más volumen → mejores descuentos → más conductores.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ FORMULARIO OSCURO ══ -->
+<section class="form-section reveal" id="unirse">
+  <div class="wrap">
+    <div class="form-wrap">
+      <div id="form-container">
+        <h2 class="form-title">Quiero unirme</h2>
+        <p class="form-sub">Completá tus datos y recibís tu link de referido al instante.</p>
+
+        <div class="form-group">
+          <label class="form-label">Nombre completo *</label>
+          <input type="text" class="form-input" id="nombre" placeholder="Tu nombre">
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp *</label>
+          <input type="tel" class="form-input" id="whatsapp" placeholder="11 XXXX-XXXX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">¿Qué plataforma usás? *</label>
+          <select class="form-select" id="plataforma">
+            <option value="">Elegí una opción</option>
+            <option>Uber</option>
+            <option>DiDi</option>
+            <option>Cabify</option>
+            <option>Taxista</option>
+            <option>Camionero / Logística</option>
+            <option>Dueño de estación GNC</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Código de referido (opcional)</label>
+          <input type="text" class="form-input" id="referido" placeholder="Código de quien te invitó">
+        </div>
+        <button class="form-btn" onclick="registrar()">⛽ Quiero mis descuentos y mi link</button>
+      </div>
+
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">🎉</div>
+        <div class="form-success-title">¡Bienvenido!</div>
+        <p class="form-success-desc">Tu registro fue exitoso. Este es tu link de referido personal — compartilo y empezá a ganar comisiones.</p>
+        <div class="ref-link" id="ref-link" onclick="copiarLink()">flotared.com/r/XXXXXXXX</div>
+        <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:8px;">👆 Tocá para copiar el link</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">
+          <a id="btn-whatsapp" href="#" target="_blank"
+            style="display:flex;align-items:center;justify-content:center;gap:10px;
+            background:#25D366;color:#fff;font-weight:700;font-size:15px;
+            padding:15px 24px;border-radius:100px;text-decoration:none;transition:all .2s;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.855L.057 23.886a.5.5 0 00.606.63l6.288-1.634A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.886 0-3.655-.5-5.187-1.375l-.372-.215-3.854 1.002 1.036-3.742-.236-.386A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            Compartir por WhatsApp
+          </a>
+          <button onclick="copiarLink()"
+            style="display:flex;align-items:center;justify-content:center;gap:10px;
+            background:rgba(255,255,255,0.08);color:#fff;font-weight:600;font-size:15px;
+            padding:15px 24px;border-radius:100px;border:1px solid rgba(255,255,255,0.2);
+            cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;"
+            id="btn-copiar">
+            📋 Copiar link
+          </button>
+        </div>
+        <p style="font-size:12px;color:rgba(255,255,255,.3);margin-top:14px;">También te llegará por WhatsApp</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-logo">Flota<span>Red</span></div>
+    <p class="footer-sub">La red de conductores de Argentina · Buenos Aires · 2026</p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+function registrar() {
+  var nombre     = document.getElementById('nombre').value.trim();
+  var whatsapp   = document.getElementById('whatsapp').value.trim();
+  var plataforma = document.getElementById('plataforma').value;
+  if (!nombre || !whatsapp || !plataforma) { alert('Por favor completá todos los campos obligatorios.'); return; }
+  var codigo = nombre.toLowerCase().replace(/\s+/g,'').substring(0,6) + Math.random().toString(36).substring(2,6).toUpperCase();
+  var link   = 'flotared.com/r/' + codigo;
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqdLGYY2Gu4p29CdfCpMvpeZMenCmF38SB9-uc5XvJotP8YleEnLkIffq2MEmJGn4/exec';
+  var ref = document.getElementById('referido').value.trim();
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({action:'registrar_afiliado',nombre:nombre,whatsapp:whatsapp,plataforma:plataforma,referido:ref,codigo:codigo})
+  }).catch(function(e){ console.log('Error fetch:', e); });
+  document.getElementById('form-container').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+  var el = document.getElementById('ref-link');
+  el.textContent = link + ' — click para copiar';
+  el.setAttribute('data-link', link);
+  // Armar mensaje de WhatsApp
+  var msgWA = 'Che, te cuento algo que me pareció interesante para conductores 👇%0A%0AMe sumé a FlotaRed, la red de conductores de Buenos Aires para negociar descuentos en estaciones de servicio juntos.%0A%0AAdemas, por cada colega que se suma con mi link cobro comisiones: 30%25 del primer nivel, 15%25 del segundo, 5%25 del tercero.%0A%0AEs gratis registrarse. Entrá acá 👇%0Ahttps://flotared.com/r/' + codigo + '%0A%0AAvisame si tenés dudas 🤙';
+  document.getElementById('btn-whatsapp').href = 'https://wa.me/?text=' + msgWA;
+}
+
+function copiarLink() {
+  var link = document.getElementById('ref-link').getAttribute('data-link');
+  if (!link) return;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText('https://' + link).then(function() {
+      document.getElementById('ref-link').textContent = '✅ ¡Copiado! — ' + link;
+      var btn = document.getElementById('btn-copiar');
+      if (btn) { btn.textContent = '✅ ¡Link copiado!'; setTimeout(function(){ btn.innerHTML = '📋 Copiar link'; }, 2500); }
+    });
+  }
+}
+</script>
+</body>
+</html>
