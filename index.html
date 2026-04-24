@@ -615,9 +615,27 @@ footer{background:var(--negro);border-top:1px solid rgba(255,255,255,.06);
       <div class="form-success" id="form-success">
         <div class="form-success-icon">🎉</div>
         <div class="form-success-title">¡Bienvenido!</div>
-        <p class="form-success-desc">Tu registro fue exitoso. Este es tu link de referido — compartilo con otros conductores y empezá a ganar.</p>
+        <p class="form-success-desc">Tu registro fue exitoso. Este es tu link de referido personal — compartilo y empezá a ganar comisiones.</p>
         <div class="ref-link" id="ref-link" onclick="copiarLink()">flotared.com/r/XXXXXXXX</div>
-        <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:12px;">Click para copiar · También te llegará por WhatsApp</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:8px;">👆 Tocá para copiar el link</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">
+          <a id="btn-whatsapp" href="#" target="_blank"
+            style="display:flex;align-items:center;justify-content:center;gap:10px;
+            background:#25D366;color:#fff;font-weight:700;font-size:15px;
+            padding:15px 24px;border-radius:100px;text-decoration:none;transition:all .2s;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.855L.057 23.886a.5.5 0 00.606.63l6.288-1.634A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.886 0-3.655-.5-5.187-1.375l-.372-.215-3.854 1.002 1.036-3.742-.236-.386A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            Compartir por WhatsApp
+          </a>
+          <button onclick="copiarLink()"
+            style="display:flex;align-items:center;justify-content:center;gap:10px;
+            background:rgba(255,255,255,0.08);color:#fff;font-weight:600;font-size:15px;
+            padding:15px 24px;border-radius:100px;border:1px solid rgba(255,255,255,0.2);
+            cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;"
+            id="btn-copiar">
+            📋 Copiar link
+          </button>
+        </div>
+        <p style="font-size:12px;color:rgba(255,255,255,.3);margin-top:14px;">También te llegará por WhatsApp</p>
       </div>
     </div>
   </div>
@@ -641,25 +659,34 @@ function registrar() {
   if (!nombre || !whatsapp || !plataforma) { alert('Por favor completá todos los campos obligatorios.'); return; }
   var codigo = nombre.toLowerCase().replace(/\s+/g,'').substring(0,6) + Math.random().toString(36).substring(2,6).toUpperCase();
   var link   = 'flotared.com/r/' + codigo;
-  var SCRIPT_URL = 'sFttps://script.google.com/macros/s/AKfycbyqdLGYY2Gu4p29CdfCpMvpeZMenCmF38SB9-uc5XvJotP8YleEnLkIffq2MEmJGn4/exec';
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqdLGYY2Gu4p29CdfCpMvpeZMenCmF38SB9-uc5XvJotP8YleEnLkIffq2MEmJGn4/exec';
   var ref = document.getElementById('referido').value.trim();
-  if (SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyqdLGYY2Gu4p29CdfCpMvpeZMenCmF38SB9-uc5XvJotP8YleEnLkIffq2MEmJGn4/exec') {
-    fetch(SCRIPT_URL, { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({action:'registrar_afiliado',nombre,whatsapp,plataforma,referido:ref,codigo})
-    }).catch(e=>console.log(e));
-  }
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({action:'registrar_afiliado',nombre:nombre,whatsapp:whatsapp,plataforma:plataforma,referido:ref,codigo:codigo})
+  }).catch(function(e){ console.log('Error fetch:', e); });
   document.getElementById('form-container').style.display = 'none';
-  document.getElementById('form-success').style.display   = 'block';+
+  document.getElementById('form-success').style.display = 'block';
   var el = document.getElementById('ref-link');
   el.textContent = link + ' — click para copiar';
   el.setAttribute('data-link', link);
+  // Armar mensaje de WhatsApp
+  var msgWA = 'Che, te cuento algo que me pareció interesante para conductores 👇%0A%0AMe sumé a FlotaRed, la red de conductores de Buenos Aires para negociar descuentos en estaciones de servicio juntos.%0A%0AAdemas, por cada colega que se suma con mi link cobro comisiones: 30%25 del primer nivel, 15%25 del segundo, 5%25 del tercero.%0A%0AEs gratis registrarse. Entrá acá 👇%0Ahttps://flotared.com/r/' + codigo + '%0A%0AAvisame si tenés dudas 🤙';
+  document.getElementById('btn-whatsapp').href = 'https://wa.me/?text=' + msgWA;
 }
 
 function copiarLink() {
   var link = document.getElementById('ref-link').getAttribute('data-link');
-  if (navigator.clipboard) navigator.clipboard.writeText(link).then(()=>{
-    document.getElementById('ref-link').textContent = '✅ ¡Copiado! — ' + link;
-  });
+  if (!link) return;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText('https://' + link).then(function() {
+      document.getElementById('ref-link').textContent = '✅ ¡Copiado! — ' + link;
+      var btn = document.getElementById('btn-copiar');
+      if (btn) { btn.textContent = '✅ ¡Link copiado!'; setTimeout(function(){ btn.innerHTML = '📋 Copiar link'; }, 2500); }
+    });
+  }
 }
 </script>
 </body>
