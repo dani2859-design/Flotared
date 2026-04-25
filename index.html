@@ -677,14 +677,12 @@ function registrar() {
   if (!nombre || !whatsapp || !plataforma) { alert('Por favor completa todos los campos obligatorios.'); return; }
   var codigo = nombre.toLowerCase().replace(/\s+/g,'').substring(0,6) + Math.random().toString(36).substring(2,6).toUpperCase();
   var link   = 'flotared.com/r/' + codigo;
-  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxFfj1D3pflQJQ7hPzXYcljV7I83kXxXV9XF9quoGWGNSzpuKA-rQzzmsSVxDN9jFu1/exec';
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwlKbkCfd45l2IVxFPV5dC71IcS2zXJUBCetsV_YyzgtRcqU1S3PLzNMDW-2tt45nV/exec';
   var ref = document.getElementById('referido').value.trim();
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({action:'registrar_afiliado',nombre:nombre,whatsapp:whatsapp,plataforma:plataforma,referido:ref,codigo:codigo})
-  }).catch(function(e){ console.log('Error fetch:', e); });
+  var payload = encodeURIComponent(JSON.stringify({nombre:nombre,whatsapp:whatsapp,plataforma:plataforma,referido:ref,codigo:codigo}));
+  var img = new Image();
+  img.src = SCRIPT_URL + '?data=' + payload;
+  console.log('Registro enviado: ' + nombre);
   document.getElementById('form-container').style.display = 'none';
   document.getElementById('form-success').style.display = 'block';
   var el = document.getElementById('ref-link');
