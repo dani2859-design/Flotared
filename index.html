@@ -1,4 +1,4 @@
-+<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -787,6 +787,24 @@ footer{background:var(--negro);border-top:1px solid var(--borde);padding:48px 0;
 <script>
 var obs = new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('visible');});},{threshold:.08});
 document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+
+// Leer codigo de referido de la URL y pre-rellenar el campo
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var ref = params.get('ref');
+  if (ref) {
+    var campo = document.getElementById('referido');
+    if (campo) {
+      campo.value = ref;
+      campo.style.borderColor = '#10B981';
+      // Scroll suave al formulario
+      setTimeout(function() {
+        var form = document.getElementById('unirse');
+        if (form) form.scrollIntoView({behavior: 'smooth', block: 'center'});
+      }, 800);
+    }
+  }
+})();
 
 var votoSeleccionado = null;
 function votar(btn) {
