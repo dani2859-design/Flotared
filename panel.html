@@ -289,7 +289,7 @@ nav { background: rgba(3,5,8,0.95); border-bottom: 1px solid var(--borde); paddi
 </div>
 
 <script>
-var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRsyuZ4in9GVFXLEmgKyg4UEXbrzt1eriQCUxEp4Tmmf-TXngwyTvl-NChwhRke8c1HEjQeLzkNy-B4/pub?output=csv';
+var API_URL = 'https://script.google.com/macros/s/AKfycbyxpErMnrGApEa4EFto3qFG0KqJorDmXbadf6JqCb8GZXOdRJNCRc02-t3ONfglndvk/exec';
 var codigoActual = '';
 var datosGlobal = [];
 var nivelActivo = 1;
@@ -309,37 +309,20 @@ function consultarPanel() {
   btn.textContent = 'Consultando...';
   document.getElementById('login-error').style.display = 'none';
 
-  var proxyURL = 'https://corsproxy.io/?' + encodeURIComponent(SHEET_CSV_URL);
-  fetch(proxyURL)
-    .then(function(r){ return r.text(); })
-    .then(function(text){
-      var todosLosRegistros = [];
-
-      function parseCSVLine(line) {
-        var result = [];
-        var cur = '';
-        var inQuotes = false;
-        for(var i=0; i<line.length; i++){
-          var c = line[i];
-          if(c === '"') { inQuotes = !inQuotes; }
-          else if(c === ',' && !inQuotes) { result.push(cur.trim()); cur = ''; }
-          else { cur += c; }
-        }
-        result.push(cur.trim());
-        return result;
-      }
-
-      var lines = text.trim().split('\n');
-      for(var i=1; i<lines.length; i++){
-        var cols = parseCSVLine(lines[i]);
-        var fecha      = (cols[0] || '').replace(/"/g,'').trim();
-        var nombre     = (cols[1] || '').replace(/"/g,'').trim();
-        var whatsapp   = (cols[2] || '').replace(/"/g,'').trim();
-        var plat       = (cols[3] || '').replace(/"/g,'').trim();
-        var refEntrada = (cols[4] || '').replace(/"/g,'').trim();
-        var codPropio  = (cols[5] || '').replace(/"/g,'').trim();
-        if(nombre && nombre !== 'Nombre') todosLosRegistros.push({ fecha:fecha, nombre:nombre, whatsapp:whatsapp, plat:plat, refEntrada:refEntrada, codPropio:codPropio });
-      }
+  fetch(API_URL + '?codigo=' + encodeURIComponent(codigo))
+    .then(function(r){ return r.json(); })
+    .then(function(json){
+      if(!json.ok){ throw new Error('API error'); }
+      var todosLosRegistros = json.data.map(function(r){
+        return {
+          fecha: r.fecha,
+          nombre: r.nombre,
+          whatsapp: '',
+          plat: r.plataforma,
+          refEntrada: r.refEntrada,
+          codPropio: r.codPropio
+        };
+      });
 
       // Verificar que el codigo existe
       var existe = todosLosRegistros.some(function(r){ return r.codPropio.toLowerCase() === codigo.toLowerCase(); });
