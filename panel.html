@@ -289,8 +289,7 @@ nav { background: rgba(3,5,8,0.95); border-bottom: 1px solid var(--borde); paddi
 </div>
 
 <script>
-var SHEET_ID = '1gURNtxQ-kN0AoGIm3aaZ-Vhi6SzHDkOJE1z69vna8O8';
-var SHEET_NAME = 'Flotared';
+var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRsyuZ4in9GVFXLEmgKyg4UEXbrzt1eriQCUxEp4Tmmf-TXngwyTvl-NChwhRke8c1HEjQeLzkNy-B4/pub?output=csv';
 var codigoActual = '';
 var datosGlobal = [];
 var nivelActivo = 1;
@@ -310,26 +309,20 @@ function consultarPanel() {
   btn.textContent = 'Consultando...';
   document.getElementById('login-error').style.display = 'none';
 
-  var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json&sheet=' + encodeURIComponent(SHEET_NAME);
-
-  fetch(url)
+  fetch(SHEET_CSV_URL)
     .then(function(r){ return r.text(); })
     .then(function(text){
-      var clean = text.replace('/*O_o*/','').replace('google.visualization.Query.setResponse(','').replace(/\);$/,'');
-      var json = JSON.parse(clean);
-      var rows = json.table.rows;
+      var lines = text.trim().split('\n');
       var todosLosRegistros = [];
-
-      for(var i=0; i<rows.length; i++){
-        var row = rows[i];
-        if(!row.c) continue;
-        var fecha     = row.c[0] ? (row.c[0].v || '') : '';
-        var nombre    = row.c[1] ? (row.c[1].v || '') : '';
-        var whatsapp  = row.c[2] ? (row.c[2].v || '') : '';
-        var plat      = row.c[3] ? (row.c[3].v || '') : '';
-        var refEntrada= row.c[4] ? (row.c[4].v || '') : '';
-        var codPropio = row.c[5] ? (row.c[5].v || '') : '';
-        todosLosRegistros.push({ fecha:fecha, nombre:nombre, whatsapp:whatsapp, plat:plat, refEntrada:refEntrada, codPropio:codPropio });
+      for(var i=1; i<lines.length; i++){
+        var cols = lines[i].split(',');
+        var fecha      = (cols[0] || '').replace(/"/g,'').trim();
+        var nombre     = (cols[1] || '').replace(/"/g,'').trim();
+        var whatsapp   = (cols[2] || '').replace(/"/g,'').trim();
+        var plat       = (cols[3] || '').replace(/"/g,'').trim();
+        var refEntrada = (cols[4] || '').replace(/"/g,'').trim();
+        var codPropio  = (cols[5] || '').replace(/"/g,'').trim();
+        if(nombre) todosLosRegistros.push({ fecha:fecha, nombre:nombre, whatsapp:whatsapp, plat:plat, refEntrada:refEntrada, codPropio:codPropio });
       }
 
       // Verificar que el codigo existe
