@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/panel", "destination": "/panel.html" },
+    { "source": "/r/:codigo", "destination": "/index.html" },
+    { "source": "/", "destination": "/index.html" }
+  ]
+}
